@@ -1,0 +1,54 @@
+﻿MIT License (code) + CC BY 4.0 (documentation)
+
+Copyright (c) 2026 Skybreak contributors
+
+--------------------------------------------------------------------------------
+1. DOCUMENTATION — Creative Commons Attribution 4.0 International
+--------------------------------------------------------------------------------
+All prose, tables, checklists and diagrams in this repository
+(README.md, SKILL.md, _FACTS.md, docs/**) are licensed under CC BY 4.0.
+You may share and adapt them for any purpose, including commercially,
+provided you give appropriate credit and indicate changes made.
+
+Full text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+--------------------------------------------------------------------------------
+2. CODE — MIT License
+--------------------------------------------------------------------------------
+All source code and scripts (scripts/**) are licensed under the MIT License:
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+--------------------------------------------------------------------------------
+3. THIRD-PARTY COMPONENTS — NOT COVERED BY THIS LICENSE
+--------------------------------------------------------------------------------
+This repository contains no binaries, no macOS system files, and no EFI images.
+
+The workflows documented here rely on third-party projects that carry their own
+licenses, which you must comply with independently:
+
+  - nullmoth/1401 ....................... see its repository
+  - nullmoth/nvidia-macos-driver ........ PolyForm Noncommercial 1.0.0
+                                          (commercial use is NOT permitted)
+  - OpenCore, Lilu, VirtualSMC,
+    WhateverGreen, and other kexts ...... see their repositories (mostly BSD/MIT)
+
+macOS itself is Apple software and is not distributed here.
+Installing macOS on non-Apple hardware conflicts with Apple's EULA; that is a
+decision and a risk each user takes on their own machine.
