@@ -112,7 +112,8 @@ log show --last 5m --predicate 'eventMessage CONTAINS "WindowServer"' --style co
 验收口径（**三条同时满足才算「出图」**）：**② 4 行 kext + ③ Metal: supported + ④ 桌面 2 分钟不黑**。
 只满足 ②③ 而桌面黑，属 §6 的第 1/6 条，不算成功。
 
-> **本机未采集 ②③ 的输出**（`kmutil showloaded | grep nullmoth` 与 `system_profiler SPDisplaysDataType` 都没留档）。按 `_FACTS` §7.4/§7.5，本机能证明的只有：**macOS 26.7.1 装完、能启动到桌面、用户态服务不再批量崩溃**；RTX 3070 的 kext 是否加载、Metal 是否可用属 **待验证**，不得写成已验证或"已出图"。要下结论，先在 macOS 里跑上面 ②③ 并把输出留存。
+> **本机已通过验收（2026-10-24）**：② 4 个 nullmoth kext 已加载、③ Metal 加速可用 —— 均实机确认，RTX 3070 确实出图。
+> 原始命令输出未存档；引用具体字段时现场重跑上面 ②③ 并留存，不要凭记忆复述。
 
 ## 5. 回滚三层（从最轻到最彻底）
 

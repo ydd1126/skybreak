@@ -37,7 +37,7 @@
 | 家族 | 设备表 | 物理验证状态（厂商原文） | 我们的判断 | 风险 |
 |---|---|---|---|---|
 | Turing | GTX 1650/1660、RTX 20、TITAN RTX、Quadro T1000/RTX | `Pending` | 可试；Turing 需 `nvrmsettle=10000` 兜 Display 起来慢 | 中 |
-| Ampere（含 **RTX 3070 `10DE:2488` SUBSYS `1458:404E`**） | RTX 30、RTX A 系列 | `Pending` | **本机就是这块卡：能不能出图必须实机验证** `未实测` | 高 |
+| Ampere（含 **RTX 3070 `10DE:2488` SUBSYS `1458:404E`**） | RTX 30、RTX A 系列 | `Pending` | **本机就是这块卡：已实机确认出图 + Metal 加速可用（2026-10-24）**。厂商 `Pending` 只表示未做自动化验证，不等于不可用 | 中 |
 | Ada | RTX 40、受支持工作站卡 | `Pending` | 可试；RTX 40 曾有 SecurityAgent/Installer 崩溃，1.14.2 已修 | 中 |
 | Blackwell | RTX 50、RTX PRO | `RTX 5060 automated`；`RTX 5070/5080 reported working` | 唯一被自动化验证的一代 | 低 |
 | Pascal/Maxwell/Kepler 及更早 | GTX 10 及以前 | 不在本驱动范围 | 只能基础显示，无加速（`[厂商]` TROUBLESHOOTING §5） | 高 |

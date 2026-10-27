@@ -109,7 +109,7 @@ amfi_get_out_of_my_way=0x1 amfi=0x80 ipc_control_port_options=0
 ## 五、硬件兼容性判断（本 skill 必须给出的诚实结论）
 
 - CPU：**Arrow Lake（Core Ultra 200S/H/HX）苹果从未支持**，但社区已跑通（需上面那套组合拳）。12/13/14 代（Alder/Raptor Lake）同属"混合核心"类，同样吃 `ProvideCurrentCpuInfo` 与补丁。
-- GPU：驱动设备表覆盖 Turing 及以后（GTX16/RTX20/30/40/50），但**物理验证过的只有 RTX 5060**。Ampere（RTX 30）状态 Pending —— 能不能出图必须实机验证。
+- GPU：驱动设备表覆盖 Turing 及以后（GTX16/RTX20/30/40/50），厂商自动化验证过的只有 RTX 5060。Ampere（RTX 30）在表里是 Pending，**但本机 RTX 3070 已实机确认出图 + Metal 可用（2026-10-24）** —— 能不能出图必须实机验证。
 - 存储：**优先 M.2 NVMe**（走 `AppleNVMe` 通用 PCIe 驱动）。SATA AHCI 在新 PCH（600/700/800 系）上风险更高，但**本次实战证明 B860 的 SATA 是可以工作的**——卡 AHCI 那行其实是时钟补丁问题。
 - 成功的真实参照：`github.com/Coolzhy/EFI-OMEN16-am2xxx-public`（Core Ultra 7 255HX + RTX 5060 Laptop + macOS 26）。
 
@@ -137,8 +137,8 @@ Windows 侧
 2. **它实际只改了 boot-args**：-v 被去掉、
 vfbheads=4 改成 1。其余键未动 —— Kernel → Block 仍为空、UEFI → Quirks → ResizeGpuBars 仍是 -1、Booter → Quirks → ResizeAppleGpuBars 仍是 0、csr-active-config 仍是 FF0F0000。
 3. **因此"最终可用配置"的真实状态**是：Block 为空（**没有**屏蔽 IONDRVSupport）、ResizeGpuBars=-1、ResizeAppleGpuBars=0、csr=FF0F0000、11 个 kext 全启用。**"必须屏蔽 IONDRVSupport、ResizeGpuBars=13"是驱动 README 的要求，但本机成功时的配置并没有这两项** —— 两个值并列记录，不要单方面断言只有一种正确值。
-4. **未采集的验收证据**：用户口头确认"进桌面、全部解决"，但 kmutil showloaded --list-only | grep nullmoth 与 system_profiler SPDisplaysDataType 的输出**没有采集**。所以驱动的 kext 是否加载、Metal 是否可用 = **待验证**，任何文档都不得写成"已验证"。
-5. **可以证明 vs 不能证明**（对外表述必须区分）：
+4. **验收证据状态（2026-10-24 更新）**：用户实机确认 **Metal 加速已可用** —— 即驱动 kext 已加载、GPU 已出图。`kmutil` 与 `system_profiler` 的原始输出尚未存档；引用具体字段时现场重跑并留存，**不要凭记忆复述输出**。
+5. **已确认 vs 仍未覆盖**（对外表述必须区分）：
    - 能证明：macOS 26.7.1 (25G241) 装完、能启动到桌面、用户态服务不再批量崩溃、Windows 双系统共存、数据无损。
-   - 不能证明：RTX 3070 在 macOS 内已出图 / 有 Metal 加速（Ampere 在厂商表里是 Pending，本机也未采集验收输出）。
+   - 已确认：**RTX 3070 在 macOS 26.7.1 内出图、Metal 加速可用**（2026-10-24 实机确认）。这与厂商设备表的 `Pending` 不冲突 —— 厂商没做自动化验证，不等于硬件不可用。
 6. **驱动阶段配置存在两种取得方式**：① 1401 Mac app（本机实际用的，只改 boot-args）② 手动/脚本写入 Block + ResizeGpuBars=13（驱动 README 的写法）。两条都记录，不合并成一条真理。

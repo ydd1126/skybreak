@@ -150,7 +150,7 @@ Get-CimInstance Win32_VideoController | Select-Object Name, PNPDeviceID
 `PNPDeviceID` 形如 `PCI\VEN_10DE&DEV_2488&SUBSYS_404E1458&REV_A1\...`，取 `VEN_`/`DEV_`/`SUBSYS_` 三段。
 **`SUBSYS` 是反序**：串里写 `<设备ID><厂商ID>`，读作 `厂商:设备` —— 本机 `404E1458` = `1458:404E`（技嘉 / RTX 3070）。按 `<厂商><设备>` 顺序查会永远对不上，导致误判"显卡不符"而错误劝停。
 
-- **设备表覆盖 Turing 及以后**（GTX16 / RTX20 / RTX30 / RTX40 / RTX50）→ 可走驱动路线。但**物理验证过的只有 RTX 5060**，Ampere（RTX 30）状态为 **Pending**。
+- **设备表覆盖 Turing 及以后**（GTX16 / RTX20 / RTX30 / RTX40 / RTX50）→ 可走驱动路线。厂商自动化验证过的只有 RTX 5060，Ampere（RTX 30）在设备表里是 **Pending**。**但本机 RTX 3070 已实机确认出图 + Metal 可用（2026-10-24）** —— `Pending` 指的是厂商没跑验证，不是硬件不能用。
   - 你的卡是 RTX 5060 → **B**
   - 你的卡是 Turing/Ampere/Ada/Blackwell 其它型号 → **C**（能不能出图必须实机验证，见第七节）
 - **不在设备表** → **D**，不装独显驱动，只装系统。系统能点亮，但别承诺加速。
@@ -442,7 +442,7 @@ Copy-Item "$USB\EFI" "C:\<WORK>\EFI-pre-driver-$(Get-Date -f yyyyMMdd-HHmmss)" -
 | 每次重启都进 Windows | R06 | U 盘启动项 GUID 失效 / 快速启动跳过固件 |
 | 抹盘时提示"磁盘已锁定" | R07 | NTFS 卷被只读挂载，抹的是卷不是盘 |
 | 双系统时间差 8 小时 | R08 | macOS 写 UTC，Windows 按本地时间读 |
-| 驱动装完仍无加速 / 黑屏循环重启 | R09 | BAR 配置与 `ResizeAppleGpuBars` 不匹配 / Ampere 未验证 |
+| 驱动装完仍无加速 / 黑屏循环重启 | R09 | BAR 配置与 `ResizeAppleGpuBars` 不匹配 / 驱动版本与 macOS 版本错配 |
 | 系统进去了但没网 | R10 | `RTL812xLucy` 未启用或未加载 |
 
 ---
@@ -677,7 +677,7 @@ w32tm /resync
 **根因**
 1. BIOS 的 `Re-Size BAR` 没开，驱动要 8 GB BAR（这是 MUST，不是可选）。
 2. `ResizeAppleGpuBars` / `ResizeGpuBars` 与 BIOS 状态不匹配。
-3. 你的卡是 Ampere（RTX 30），状态仍 **Pending** —— 物理验证过的只有 RTX 5060，能装不代表能出图。
+3. 你的卡是 Ampere（RTX 30），厂商设备表状态是 **Pending**（只有 RTX 5060 做过自动化验证）—— 但 **本机 RTX 3070 已实机确认出图 + Metal 可用**（2026-10-24）。`Pending` ≠ 不可用，它只表示厂商没跑过验证。
 
 **验证**
 
@@ -905,7 +905,7 @@ python -c "import plistlib;d=plistlib.load(open(r'M:\EFI\OC\config.plist','rb'))
    社区已跑通的参照是 `github.com/Coolzhy/EFI-OMEN16-am2xxx-public`（Core Ultra 7 255HX + RTX 5060 Laptop + macOS 26）——**CPU 型号与你的不同**，同一套组合拳不等于同一结果。本机 245K 实测跑通，但换 265K/285K、换主板，必须按第二节重新判档、重新验证。可承诺的是"流程与配置这套是对的"，不可承诺的是"你这台也一定行"。
 
 2. **Ampere（RTX 30）未物理验证。**
-   驱动设备表覆盖 Turing 及以后（GTX16 / RTX20 / RTX30 / RTX40 / RTX50），但**物理验证过的只有 RTX 5060**；Ampere 状态是 **Pending**。RTX 3070 装得上、进得去、能不能出图必须实机三连测（6.1）才有答案。用户问"能不能用"时，答案是"必须实测"，不是"应该可以"。
+   驱动设备表覆盖 Turing 及以后（GTX16 / RTX20 / RTX30 / RTX40 / RTX50），厂商自动化验证过的只有 RTX 5060；Ampere 在表里是 **Pending**，**但本机 RTX 3070 已实机确认出图 + Metal 可用（2026-10-24）**。RTX 3070 装得上、进得去、能不能出图必须实机三连测（6.1）才有答案。用户问"能不能用"时，答案是"必须实测"，不是"应该可以"。
 
 3. **SATA 与 NVMe 的差异是真实的，但别误判。**
    优先 M.2 NVMe（走 `AppleNVMe` 通用 PCIe 驱动，路径最干净）。SATA AHCI 在新 PCH（600/700/800 系）上风险更高；但**本次实战证明 B860 的 SATA 可以工作**——冻在 `[AHCI][HBA] start:` 那一行其实是时钟补丁缺失（R03），不是 SATA 不兼容。把这条讲清楚，能省掉用户换盘的钱和两天时间。

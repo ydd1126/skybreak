@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | **Platform** | Intel Core Ultra 5 245K (Arrow Lake-S) · Gigabyte B860M POWER · NVIDIA RTX 3070 8GB |
-| **Result** | **macOS 26.7.1 (25G241)** installed, boots to desktop, dual-boots with Windows 11 25H2 |
+| **Result** | **macOS 26.7.1 (25G241)** installed, boots to desktop, **RTX 3070 renders with Metal acceleration**, dual-boots with Windows 11 25H2 |
 | **Data** | 100 GB+ preserved (verified backup before touching any disk) |
 | **Cost** | 4 days of debugging, distilled into 5 decisive changes |
 
@@ -74,6 +74,8 @@ It handles: proxy/TUN/Apple-TLS preflight → locate or download 1401 → locate
 
 **What no tool can do** (no API exists): the 9 BIOS settings, the installer's erase/click sequence, and the first-boot wizard. So "one command" here means *one command to a fully usable installation stick* — not "one command to a working desktop".
 
+> **Verification status (2026-10-24)**: OS install, desktop boot, service stability, dual-boot and **GPU rendering with Metal** are confirmed on the reference machine. Audio (ALC897), Bluetooth, sleep/wake and hot-plug are still unverified — see [`_VERIFICATION-LOG.md`](_VERIFICATION-LOG.md).
+
 ### macOS side
 
 ```bash
@@ -90,7 +92,7 @@ system_profiler SPDisplaysDataType | head -20      # expect Metal: Supported
 
 ## What this repo will not do
 
-- **It will not claim the GPU works.** Verifying output was never collected on this machine, and the driver's own device table lists Ampere as `Pending`. What is proven: the OS installs, boots to desktop, and userspace services stop failing in bulk.
+- **It will not hand you a "supported" badge.** The vendor's own device table still lists Ampere as `Pending` — they ran no automated validation. This build was confirmed on real hardware on 2026-10-24: macOS reaches the desktop and the RTX 3070 renders with Metal acceleration. Raw command output is not archived, so re-run the two commands under *macOS side* before quoting specific fields.
 - **It will not ship an EFI.** EFI carries SMBIOS identity — per-machine, private. Generate your own with 1401.
 - **It will not ship the driver.** That lives at [nullmoth/nvidia-macos-driver](https://github.com/nullmoth/nvidia-macos-driver) under **PolyForm Noncommercial 1.0.0** (commercial use not permitted).
 

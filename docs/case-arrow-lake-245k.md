@@ -16,7 +16,7 @@ BIOS 的 VT-d/HT/E 核、NVRAM 盖住 boot-args、`DevirtualiseMmio` 方向反�
 |---|---|
 | 主板 | Gigabyte **B860M POWER**（Intel B860 / LGA1851），BIOS AMI **F10**（2026-02-02） |
 | CPU | **Intel Core Ultra 5 245K**（Arrow Lake-S，Family 6 Model 0xC6），原始 14 核（6P+8E），L3 24 MB |
-| dGPU | **NVIDIA RTX 3070 8GB**，`10DE:2488`，SUBSYS `1458:404E`（技嘉）→ Ampere，厂商验证状态 **Pending** |
+| dGPU | **NVIDIA RTX 3070 8GB**，`10DE:2488`，SUBSYS `1458:404E`（技嘉）→ Ampere，厂商验证状态 **Pending**（本机 2026-10-24 实机确认可出图 + Metal 可用） |
 | iGPU | Intel Graphics `8086:7D67`（Arrow Lake，macOS 无驱动） |
 | 内存 | 16 GB DDR5-6000 ×1（单通道） |
 | 网卡/声卡 | RTL8125 2.5GbE `10EC:8125` / ALC897 `10EC:0897` + NVIDIA HDMI `10DE:009E` |
@@ -142,9 +142,9 @@ BIOS 的 VT-d/HT/E 核、NVRAM 盖住 boot-args、`DevirtualiseMmio` 方向反�
 
 ## 7. 边界：这套复盘证明到哪一步
 
-| 已验证 `[实测]` | 尚未验证 `未实测` |
+| 已验证 `[实测]` | 仍未覆盖 |
 |---|---|
-| macOS 26.7.1 25G241 能装完、能进桌面、服务不再批量崩溃 | **RTX 3070 是否真的出图/有 Metal 加速**（Ampere 在厂商表里仍是 `Pending`） |
+| macOS 26.7.1 25G241 能装完、能进桌面、服务不再批量崩溃；RTX 3070 出图 + Metal 加速可用（2026-10-24 实机确认） | 音频 ALC897、蓝牙、睡眠/热插拔、高刷 DSC 链路 |
 | 五步改动的每一条都有对应日志/脚本作为证据 | 声卡 ALC897 是否真的出声（layout 11 只是选型依据） |
 | NVRAM Delete / ScanPolicy / SIP 位表的机制 | 蓝牙（本机未确认芯片、未加 kext） |
 | 双系统共存、时间同步、固件启动项修正 | 热插拔显示器、HDMI 音频（厂商已列为 open issue） |
