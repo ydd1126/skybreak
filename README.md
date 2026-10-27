@@ -1,5 +1,7 @@
 # 开天 · Skybreak
 
+> **English?** → [README.en.md](README.en.md) — the symptom table and all 5 fixes are in English.
+
 **在苹果从未支持的硬件上，把 macOS 26 装出来，并且每一次都能复现。**
 
 Arrow Lake（Core Ultra 200S）+ NVIDIA RTX 30 系 + Intel 800 系芯片组 —— 这三个条件叠在一起，是当前黑苹果最难的一档。这个仓库是把它啃下来的**完整施工档案 + 可执行验收**，不是教程。
