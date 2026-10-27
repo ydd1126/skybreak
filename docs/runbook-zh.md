@@ -261,7 +261,7 @@ sudo ./install.sh                     # 输入密码时屏幕不显示，正常
 kmutil showloaded --list-only | grep nullmoth
 #   期望 4 行：NVRM / NVAccel / NVRMFB / NVRMAGDC
 
-# ② Metal 是否可用
+# ② Metal 是否可用（本机已确认 supported，仍建议现场复核）
 system_profiler SPDisplaysDataType | head -20
 #   期望：Chipset Model: NVIDIA GeForce RTX 3070
 #         Metal: Supported
